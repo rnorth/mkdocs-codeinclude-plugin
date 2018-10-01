@@ -23,7 +23,6 @@ class CodeIncludePlugin(BasePlugin):
         print(page.file.abs_src_path)
 
         def repl(m):
-            print(m)
             filename = m.group("filename")
             lang = m.group("lang") or ""
             lines = m.group("lines")
@@ -33,8 +32,6 @@ class CodeIncludePlugin(BasePlugin):
 
             page_parent_dir = os.path.dirname(page.file.abs_src_path)
             import_path = os.path.join(page_parent_dir, filename)
-            print(filename)
-            print(import_path)
             with open(import_path) as f:
                 content = f.read()
 
