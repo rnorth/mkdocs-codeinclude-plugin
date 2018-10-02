@@ -25,14 +25,11 @@ def select(text,
         delim_count = 0
         for line in text.splitlines():
             i = i + 1
-            print(delim_count)
             if block in line and delim_count <= 0:
-                print("starting")
                 delim_count = 0
                 delim_count += line.count("{")
                 
             if delim_count > 0:
-                print(line)
                 selected_lines.append(i)
 
             delim_count -= line.count("}")
@@ -62,21 +59,3 @@ def select(text,
         last_selected = i
 
     return result
-
-
-s = """
-a
-b
-c
-d
-e
-f
-g
-h
-i
-j
-k
-l
-"""
-
-print(select(s, lines="3-7,1"))
