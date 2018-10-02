@@ -17,7 +17,7 @@ def select(text,
                 end = int(range_match.group(2))
                 for i in range(start, end + 1):
                     selected_lines.append(i)
-            else:
+            elif line_range.strip() != "":
                 selected_lines.append(int(line_range))
     
     if block:
