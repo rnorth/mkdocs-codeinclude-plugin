@@ -21,17 +21,11 @@ RE_END = r'''(?x)
 
 RE_SNIPPET = r'''(?x)
     ^
-    \s*
+    (?P<leading_space>\s*)
     \[(?P<title>[^\]]*)\]\((?P<filename>[^)]+)\)
     [\t ]+
     (?P<params>.*)
     $
-'''
-
-RE_OPTION = r'''(?x)
-    (lines:[ \t]*(?P<lines>[0-9,\-]+))
-    |
-    (block:[ \t]*(?P<block>[^$]+))
 '''
 
 def get_substitute(page, title, filename, lines, block):
@@ -58,10 +52,14 @@ class CodeIncludePlugin(BasePlugin):
         lines = ""
         block = ""
         results = ""
+        indent = 0
         for line in markdown.splitlines():
+            boundary = False
+
             if active and re.match(RE_END, line):
                 print("end")
                 active = False
+                boundary = True
 
             if active:
                 print("active")
@@ -70,23 +68,27 @@ class CodeIncludePlugin(BasePlugin):
                     print("snippet match")
                     title = snippet_match.group("title")
                     filename = snippet_match.group("filename")
+                    indent = snippet_match.group("leading_space")
                     raw_params = snippet_match.group("params")
                     print(raw_params)
                     params = dict(token.split(":") for token in shlex.split(raw_params))
                     lines = params.get("lines", "")
                     block = params.get("block", "")
 
-                    results += get_substitute(page, title, filename, lines, block)
+                    code_block = get_substitute(page, title, filename, lines, block)
+                    code_block = re.sub("^", indent, code_block, flags=re.MULTILINE)
+                    print(code_block)
+                    results += code_block
 
-
-            match = re.match(RE_START, line)
-            if match:
+            if re.match(RE_START, line):
                 print("start")
                 active = True
+                boundary = True
 
-            if not active and not match:
+            if not active and not boundary:
                 results += line + "\n"
 
+        #print(results)
         return results
 
         # def repl(m):
