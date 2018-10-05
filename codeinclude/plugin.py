@@ -28,14 +28,14 @@ RE_SNIPPET = r'''(?x)
     $
 '''
 
-def get_substitute(page, title, filename, lines, block):
+def get_substitute(page, title, filename, lines, block, inside_block):
 
     page_parent_dir = os.path.dirname(page.file.abs_src_path)
     import_path = os.path.join(page_parent_dir, filename)
     with open(import_path) as f:
         content = f.read()
 
-    selected_content = select(content, lines=lines, block=block)
+    selected_content = select(content, lines=lines, block=block, inside_block=inside_block)
 
     return "\n```java tab=\"" + title + "\"\n" + selected_content + "\n```\n\n"
 
@@ -65,8 +65,10 @@ class CodeIncludePlugin(BasePlugin):
                     params = dict(token.split(":") for token in shlex.split(raw_params))
                     lines = params.get("lines", "")
                     block = params.get("block", "")
+                    inside_block = params.get("inside_block", "")
 
-                    code_block = get_substitute(page, title, filename, lines, block)
+
+                    code_block = get_substitute(page, title, filename, lines, block, inside_block)
                     # re-indent
                     code_block = re.sub("^", indent, code_block, flags=re.MULTILINE)
                     results += code_block
