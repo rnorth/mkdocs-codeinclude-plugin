@@ -2,6 +2,7 @@ from mkdocs.plugins import BasePlugin
 import re
 import os
 import shlex
+import textwrap
 
 from codeinclude.resolver import select
 
@@ -37,7 +38,9 @@ def get_substitute(page, title, filename, lines, block, inside_block):
 
     selected_content = select(content, lines=lines, block=block, inside_block=inside_block)
 
-    return "\n```java tab=\"" + title + "\"\n" + selected_content + "\n```\n\n"
+    dedented = textwrap.dedent(selected_content)
+
+    return "\n```java tab=\"" + title + "\"\n" + dedented + "\n```\n\n"
 
 class CodeIncludePlugin(BasePlugin):
     def on_page_markdown(self, markdown, page, config,
