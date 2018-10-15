@@ -28,7 +28,8 @@ def select(text,
             i = i + 1
             if block in line and delim_count <= 0:
                 delim_count = 0
-                delim_count += line.count("{")
+
+            delim_count += line.count("{")
                 
             if delim_count > 0:
                 selected_lines.append(i)
@@ -43,9 +44,9 @@ def select(text,
             i = i + 1
             if inside_block in line and delim_count <= 0:
                 delim_count = 0
-                delim_count += line.count("{")
                 first_line_of_block = True
-
+            
+            delim_count += line.count("{")
             delim_count -= line.count("}")
                 
             if delim_count > 0 and not first_line_of_block:
