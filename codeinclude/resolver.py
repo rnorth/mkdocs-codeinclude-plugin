@@ -25,16 +25,20 @@ def select(text,
         i = 0
         delim_count = 0
         for line in text.splitlines():
+            first_line_of_block = False
             i = i + 1
             if block in line and delim_count <= 0:
                 delim_count = 0
+                first_line_of_block = True
+                delim_count += line.count("{")
 
-            delim_count += line.count("{")
-                
             if delim_count > 0:
+                if not first_line_of_block:
+                    delim_count += line.count("{")
                 selected_lines.append(i)
-
+            
             delim_count -= line.count("}")
+
 
     if inside_block:
         i = 0
@@ -45,11 +49,12 @@ def select(text,
             if inside_block in line and delim_count <= 0:
                 delim_count = 0
                 first_line_of_block = True
-            
-            delim_count += line.count("{")
+                delim_count += line.count("{")
+
             delim_count -= line.count("}")
                 
             if delim_count > 0 and not first_line_of_block:
+                delim_count += line.count("{")
                 selected_lines.append(i)
 
     if from_token and to_token:
