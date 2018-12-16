@@ -1,18 +1,21 @@
 import re
 
 
-def select(text, 
-           lines=None, 
-           from_token=None, to_token=None, 
-           block=None,
-           inside_block=None, 
-           lang=None):
-    
+def select(
+    text,
+    lines=None,
+    from_token=None,
+    to_token=None,
+    block=None,
+    inside_block=None,
+    lang=None,
+):
+
     selected_lines = []
 
     if lines:
         for line_range in lines.split(","):
-            range_match = re.match(r'(\d+)-(\d+)', line_range)
+            range_match = re.match(r"(\d+)-(\d+)", line_range)
             if range_match:
                 start = int(range_match.group(1))
                 end = int(range_match.group(2))
@@ -20,7 +23,7 @@ def select(text,
                     selected_lines.append(i)
             elif line_range.strip() != "":
                 selected_lines.append(int(line_range))
-    
+
     if block:
         i = 0
         delim_count = 0
@@ -36,9 +39,8 @@ def select(text,
                 if not first_line_of_block:
                     delim_count += line.count("{")
                 selected_lines.append(i)
-            
-            delim_count -= line.count("}")
 
+            delim_count -= line.count("}")
 
     if inside_block:
         i = 0
@@ -52,7 +54,7 @@ def select(text,
                 delim_count += line.count("{")
 
             delim_count -= line.count("}")
-                
+
             if delim_count > 0 and not first_line_of_block:
                 delim_count += line.count("{")
                 selected_lines.append(i)
@@ -64,10 +66,10 @@ def select(text,
             i = i + 1
             if not active and from_token in line:
                 active = True
-            
+
             if active:
                 selected_lines.append(i)
-            
+
             if active and to_token in line:
                 active = False
 
