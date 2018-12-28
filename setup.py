@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 def read_file(fname):
     "Read a local file"
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return open(join(dirname(__file__), fname)).read()
 
 
 setup(
