@@ -29,9 +29,6 @@ setup(
         'mkdocs>=0.17',
         'mkdocs'
     ],
-    test_requires=[
-        "unittest"
-    ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
@@ -50,5 +47,6 @@ setup(
             'codeinclude = codeinclude.plugin:CodeIncludePlugin'
         ]
     },
-    test_suite="tests"
+    test_suite="nose.collector",
+    tests_require=["nose"]
 )
