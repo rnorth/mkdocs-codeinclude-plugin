@@ -3,3 +3,5 @@
 .direnv/
 __pycache__/
 *.pyc
+.idea/
+.eggs/

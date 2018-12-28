@@ -1,4 +1,10 @@
-import os
+import io
+import re
+from glob import glob
+from os.path import basename
+from os.path import dirname
+from os.path import join
+from os.path import splitext
 from setuptools import setup, find_packages
 
 
@@ -23,8 +29,11 @@ setup(
         'mkdocs>=0.17',
         'mkdocs'
     ],
-    test_requires=[
-        "nose"
+    setup_requires = [
+        "pytest-runner"
+    ],
+    tests_require=[
+        "pytest"
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -35,7 +44,10 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
     ],
-    packages=find_packages(exclude=['*.tests']),
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
+    include_package_data=True,
     entry_points={
         'mkdocs.plugins': [
             'codeinclude = codeinclude.plugin:CodeIncludePlugin'
