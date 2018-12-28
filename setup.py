@@ -29,11 +29,8 @@ setup(
         'mkdocs>=0.17',
         'mkdocs'
     ],
-    setup_requires = [
-        "pytest-runner"
-    ],
-    tests_require=[
-        "pytest"
+    test_requires=[
+        "unittest"
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
