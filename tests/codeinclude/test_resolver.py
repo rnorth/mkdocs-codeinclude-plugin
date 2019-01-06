@@ -1,5 +1,3 @@
-import unittest
-
 from codeinclude.resolver import select
 
 CODE_BLOCK_EXAMPLE = """

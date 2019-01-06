@@ -83,4 +83,7 @@ def select(
         result += source_lines[i - 1] + "\n"
         last_selected = i
 
+    if result == "":
+        return text
+
     return result
