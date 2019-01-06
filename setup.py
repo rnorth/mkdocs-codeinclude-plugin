@@ -38,8 +38,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
     ],
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    packages=['codeinclude'],
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     include_package_data=True,
     entry_points={
