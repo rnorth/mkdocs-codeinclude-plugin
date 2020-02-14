@@ -5,6 +5,7 @@ import textwrap
 
 from mkdocs.plugins import BasePlugin
 from codeinclude.resolver import select
+from codeinclude.languages import get_lang_class
 
 RE_START = r"""(?x)
     ^
@@ -44,8 +45,13 @@ def get_substitute(page, title, filename, lines, block, inside_block):
     )
 
     dedented = textwrap.dedent(selected_content)
+    lang_code = get_lang_class(filename)
+    return f'''
+```{lang_code} tab="{title}"
+{dedented}
+```
 
-    return '\n```java tab="' + title + '"\n' + dedented + "\n```\n\n"
+'''
 
 
 class CodeIncludePlugin(BasePlugin):
