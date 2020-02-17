@@ -31,6 +31,17 @@ and some text after
 
 """
 
+EMPTY_TITLE_MARKDOWN_EXAMPLE = """
+# hello world
+
+some text before
+<!--codeinclude-->
+[](Foo.java)
+<!--/codeinclude-->
+and some text after
+
+"""
+
 c = Config(schema=DEFAULT_SCHEMA)
 c["site_url"] = "http://example.org/"
 
@@ -78,6 +89,26 @@ class PluginTextCase(unittest.TestCase):
 
                                   ```java tab=\"bar\"
                                   public class Bar {
+
+                                  }
+                                  ```
+
+                                  and some text after
+                                  """).strip(),
+                         result.strip())
+
+    def test_empty_title_case(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(EMPTY_TITLE_MARKDOWN_EXAMPLE, PAGE_EXAMPLE, dict())
+
+        print(result)
+        self.assertEqual(textwrap.dedent("""
+                                  # hello world
+
+                                  some text before
+
+                                  ```java
+                                  public class Foo {
 
                                   }
                                   ```

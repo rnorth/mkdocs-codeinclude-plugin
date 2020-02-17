@@ -34,7 +34,14 @@ RE_SNIPPET = r"""(?x)
 
 
 def get_substitute(page, title, filename, lines, block, inside_block):
+    # Compute the fence header
+    lang_code = get_lang_class(filename)
+    header = lang_code
+    title = title.strip()
+    if len(title) > 0:
+        header += f' tab="{title}"'
 
+    # Select the code content
     page_parent_dir = os.path.dirname(page.file.abs_src_path)
     import_path = os.path.join(page_parent_dir, filename)
     with open(import_path) as f:
@@ -45,9 +52,9 @@ def get_substitute(page, title, filename, lines, block, inside_block):
     )
 
     dedented = textwrap.dedent(selected_content)
-    lang_code = get_lang_class(filename)
+
     return f'''
-```{lang_code} tab="{title}"
+```{header}
 {dedented}
 ```
 
