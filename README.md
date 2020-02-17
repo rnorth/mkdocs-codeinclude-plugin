@@ -5,7 +5,7 @@ This is effectively an extended Markdown format, but is intended to degrade grac
 
 ## Usage
 
-A codeinclude block will resemble a regular markdown link surrounded by a pair of XML comments, e.g.:
+A codeinclude block resembles a regular markdown link surrounded by a pair of XML comments, e.g.:
 
 <!-- 
 To prevent this from being rendered as a codeinclude when rendering this page, we use HTML tags.
@@ -35,8 +35,6 @@ public class FooService {
     public void doFoo() {
         foo.doSomething();
     }
-    
-    ...
 
 ```
 
@@ -63,7 +61,8 @@ Note that:
   
 When we wish to include a section of code that does not naturally appear within braces, we can simply insert our token,
 with matching braces, in a comment. 
-While a little ugly, this has the benefit of working in any context and is easy to understand. 
+While a little ugly, this has the benefit of working in any context, even in languages that do not use
+curly braces, and is easy to understand. 
 For example:
 
 ```java
@@ -77,5 +76,10 @@ public class FooService {
         // }
     }
 
+```
 
-``` 
+will be rendered as:
+
+```java
+doTheThingThatWeActuallyWantToShow();
+```
