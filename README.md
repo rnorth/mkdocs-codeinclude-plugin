@@ -83,3 +83,17 @@ will be rendered as:
 ```java
 doTheThingThatWeActuallyWantToShow();
 ```
+
+## Building the Project
+
+Install the dependencies:
+
+```shell
+pip install -r requirements.txt
+pip install nose # Optionally, install nose to run the tests
+```
+
+Run the tests:
+```shell
+nosetests
+```
