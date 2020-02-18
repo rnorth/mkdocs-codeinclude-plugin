@@ -36,6 +36,7 @@ public class FooService {
         foo.doSomething();
     }
 
+}
 ```
 
 If we use `block:doFoo` as our targeting expression, we will have the following content included into our page:
@@ -76,6 +77,7 @@ public class FooService {
         // }
     }
 
+}
 ```
 
 will be rendered as:
