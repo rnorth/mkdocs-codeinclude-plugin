@@ -3,6 +3,23 @@
 A plugin for mkdocs that allows some advanced 'includes' functionality to be used for embedded code blocks.
 This is effectively an extended Markdown format, but is intended to degrade gracefully when rendered with a different renderer. 
 
+## Installation
+
+1. Add dependency on the plugin:
+
+```requirements.txt
+-e git+https://github.com/rnorth/mkdocs-codeinclude-plugin#egg=mkdocs_codeinclude_plugin
+```
+
+You have to use Git dependency specification until the plugin is published on PyPy.
+
+2. Add `codeinclude` to the list of your MkDocs plugins (typically listed in `mkdocs.yml`):
+
+```yaml
+plugins:
+  - codeinclude
+```
+
 ## Usage
 
 A codeinclude block resembles a regular markdown link surrounded by a pair of XML comments, e.g.:
@@ -36,6 +53,7 @@ public class FooService {
         foo.doSomething();
     }
 
+}
 ```
 
 If we use `block:doFoo` as our targeting expression, we will have the following content included into our page:
@@ -76,6 +94,7 @@ public class FooService {
         // }
     }
 
+}
 ```
 
 will be rendered as:
