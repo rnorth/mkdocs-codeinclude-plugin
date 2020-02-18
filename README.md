@@ -42,7 +42,7 @@ Where `targeting_expression` could be:
 
 If these are provided, the macro will seek out any line containing the token `someString` and grab the next curly brace
 delimited block that it finds. `block` will grab the starting line and closing brace, whereas `inside_block` will omit 
-these.
+these. If no `targeting_expression` is provided, the whole file is included.
 
 e.g., given:
 ```java
