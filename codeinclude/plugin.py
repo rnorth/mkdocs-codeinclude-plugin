@@ -36,7 +36,8 @@ def get_substitute(page, title, filename, lines, block, inside_block):
 
     page_parent_dir = os.path.dirname(page.file.abs_src_path)
     import_path = os.path.join(page_parent_dir, filename)
-    with open(import_path) as f:
+    # Always use UTF-8, as it is the recommended default for source file encodings.
+    with open(import_path, encoding='UTF-8') as f:
         content = f.read()
 
     selected_content = select(
