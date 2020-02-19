@@ -8,6 +8,13 @@ from mkdocs.structure.pages import Page
 
 from codeinclude.plugin import CodeIncludePlugin
 
+MARKDOWN_EXAMPLE_NO_INCLUDES = """
+# hello world
+
+some text before
+
+"""
+
 MARKDOWN_EXAMPLE_NO_SELECTOR = """
 # hello world
 
@@ -61,6 +68,13 @@ PAGE_EXAMPLE = Page("", File(os.path.abspath("./fixture/text.md"), "/src", "/des
 
 
 class PluginTextCase(unittest.TestCase):
+
+    def test_no_includes(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_NO_INCLUDES, PAGE_EXAMPLE, dict())
+
+        self.assertEqual(MARKDOWN_EXAMPLE_NO_INCLUDES.strip(),
+                         result.strip())
 
     def test_simple_case_no_selector(self):
         plugin = CodeIncludePlugin()
