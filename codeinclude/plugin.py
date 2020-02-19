@@ -3,7 +3,7 @@ import os
 import shlex
 import textwrap
 from dataclasses import dataclass
-from typing import List
+from typing import Dict
 
 from mkdocs.plugins import BasePlugin
 from codeinclude.resolver import select
@@ -57,22 +57,19 @@ class CodeIncludeBlock(object):
     content: str
 
 
-def find_code_include_blocks(markdown: str) -> List[CodeIncludeBlock]:
-    ci_blocks = list()
-    index = 0
+def find_code_include_blocks(markdown: str) -> Dict[int, CodeIncludeBlock]:
+    ci_blocks = dict()
+    first = -1
     lines = markdown.splitlines()
-    while index < len(lines):
+    for index, line in enumerate(lines):
         if re.match(RE_START, lines[index]):
-            # Start of the ci block
-            start = index
-            index += 1
-            # Find the end of the ci block
-            while index < len(lines) and not re.match(RE_END, lines[index]):
-                index += 1
-            if index < len(lines):
-                last = index
-                content = '\n'.join(lines[start:last+1])
-                ci_blocks.append(CodeIncludeBlock(start, last, content))
+            first = index
+            continue
+        if re.match(RE_END, lines[index]):
+            last = index
+            content = '\n'.join(lines[first:last + 1])
+            ci_blocks[first] = CodeIncludeBlock(first, last, content)
+            first = -1
     return ci_blocks
 
 
