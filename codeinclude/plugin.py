@@ -2,6 +2,8 @@ import re
 import os
 import shlex
 import textwrap
+from dataclasses import dataclass
+from typing import List
 
 from mkdocs.plugins import BasePlugin
 from codeinclude.resolver import select
@@ -46,6 +48,32 @@ def get_substitute(page, title, filename, lines, block, inside_block):
     dedented = textwrap.dedent(selected_content)
 
     return '\n```java tab="' + title + '"\n' + dedented + "\n```\n\n"
+
+
+@dataclass
+class CodeIncludeBlock(object):
+    first_line_index: int
+    last_line_index: int
+    content: str
+
+
+def find_code_include_blocks(markdown: str) -> List[CodeIncludeBlock]:
+    ci_blocks = list()
+    index = 0
+    lines = markdown.splitlines()
+    while index < len(lines):
+        if re.match(RE_START, lines[index]):
+            # Start of the ci block
+            start = index
+            index += 1
+            # Find the end of the ci block
+            while index < len(lines) and not re.match(RE_END, lines[index]):
+                index += 1
+            if index < len(lines):
+                last = index
+                content = '\n'.join(lines[start:last+1])
+                ci_blocks.append(CodeIncludeBlock(start, last, content))
+    return ci_blocks
 
 
 class CodeIncludePlugin(BasePlugin):
