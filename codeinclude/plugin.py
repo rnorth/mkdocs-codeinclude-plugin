@@ -133,13 +133,15 @@ def substitute(markdown: str, substitutes: List[Replacement]) -> str:
     # Perform substitutions
     result = ""
     index = 0
-    markdown_lines = markdown.splitlines()
-    while index < len(markdown_lines):
+    lines = markdown.splitlines()
+    while index < len(lines):
         if index in substitutes_by_first_line.keys():
+            # Replace the codeinclude fragment starting at this line
             substitute = substitutes_by_first_line[index]
             result += substitute.content
             index = substitute.last_line_index
         else:
-            result += markdown_lines[index] + "\n"
+            # Keep the input line
+            result += lines[index] + "\n"
         index += 1
     return result
