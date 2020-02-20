@@ -8,12 +8,42 @@ from mkdocs.structure.pages import Page
 
 from codeinclude.plugin import CodeIncludePlugin
 
-MARKDOWN_EXAMPLE = """
+MARKDOWN_EXAMPLE_NO_INCLUDES = """
+# hello world
+
+some text before
+
+"""
+
+MARKDOWN_EXAMPLE_NO_SELECTOR = """
 # hello world
 
 some text before
 <!--codeinclude-->
 [foo](Foo.java)
+<!--/codeinclude-->
+and some text after
+
+"""
+
+MARKDOWN_EXAMPLE_SELECTOR_ON_SAME_LINE = """
+# hello world
+
+some text before
+<!--codeinclude-->
+[foo](Foo.java) lines:1
+<!--/codeinclude-->
+and some text after
+
+"""
+
+MARKDOWN_EXAMPLE_SELECTOR_ON_NEXT_LINE = """
+# hello world
+
+some text before
+<!--codeinclude-->
+[foo](Foo.java)
+lines:1
 <!--/codeinclude-->
 and some text after
 
@@ -50,9 +80,16 @@ PAGE_EXAMPLE = Page("", File(os.path.abspath("./tests/codeinclude/fixture/text.m
 
 class PluginTextCase(unittest.TestCase):
 
-    def test_simple_case(self):
+    def test_no_includes(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_NO_INCLUDES, PAGE_EXAMPLE, dict())
+
+        self.assertEqual(MARKDOWN_EXAMPLE_NO_INCLUDES.strip(),
+                         result.strip())
+
+    def test_simple_case_no_selector(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_NO_SELECTOR, PAGE_EXAMPLE, dict())
 
         print(result)
         self.assertEqual(textwrap.dedent("""
@@ -66,6 +103,44 @@ class PluginTextCase(unittest.TestCase):
                                   }
                                   ```
                                   
+                                  and some text after
+                                  """).strip(),
+                         result.strip())
+
+    def test_simple_case_selector_on_same_line(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_SELECTOR_ON_SAME_LINE, PAGE_EXAMPLE, dict())
+
+        print(result)
+        self.assertEqual(textwrap.dedent("""
+                                  # hello world
+
+                                  some text before
+
+                                  ```java tab=\"foo\"
+                                  public class Foo {
+                                  
+                                  ```
+
+                                  and some text after
+                                  """).strip(),
+                         result.strip())
+
+    def test_simple_case_selector_on_next_line(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_SELECTOR_ON_NEXT_LINE, PAGE_EXAMPLE, dict())
+
+        print(result)
+        self.assertEqual(textwrap.dedent("""
+                                  # hello world
+
+                                  some text before
+
+                                  ```java tab=\"foo\"
+                                  public class Foo {
+                                  
+                                  ```
+
                                   and some text after
                                   """).strip(),
                          result.strip())
