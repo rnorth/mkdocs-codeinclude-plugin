@@ -72,6 +72,14 @@ and some text after
 
 """
 
+MARKDOWN_EXAMPLE_RIGHT_CURLY = """
+# hello world
+
+<!--codeinclude-->
+[Curly](Curly.java) block:Curly
+<!--/codeinclude-->
+"""
+
 c = Config(schema=DEFAULT_SCHEMA)
 c["site_url"] = "http://example.org/"
 
@@ -104,6 +112,24 @@ class PluginTextCase(unittest.TestCase):
                                   ```
                                   
                                   and some text after
+                                  """).strip(),
+                         result.strip())
+
+    def test_simple_case_right_curly_inside_block(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_RIGHT_CURLY, PAGE_EXAMPLE, dict())
+
+        print(result)
+        self.assertEqual(textwrap.dedent(r"""
+                                  # hello world
+
+
+                                  ```java tab="Curly"
+                                  public class Curly {
+                                    public static String RIGHT_CURLY_REGEX = "\\}";
+                                  }
+                                  
+                                  ```
                                   """).strip(),
                          result.strip())
 
