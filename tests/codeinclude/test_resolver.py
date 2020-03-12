@@ -33,6 +33,22 @@ class ResolverTest(unittest.TestCase):
                            "}\n"),
                           result)
 
+    def test_block_curly_on_same_line(self):
+        result = select(
+            textwrap.dedent(
+                """
+                /* Before foo */
+                foo {
+                  /* {} {@code Bar} */
+                }
+                /* After foo */
+                """),
+            block="foo")
+        self.assertEquals(("foo {\n"
+                           "  /* {} {@code Bar} */\n"
+                           "}\n"),
+                          result)
+
     def test_inside_block_content_on_last_line(self):
         result = select(
             textwrap.dedent(
