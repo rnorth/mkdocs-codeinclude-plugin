@@ -115,6 +115,7 @@ class PluginTextCase(unittest.TestCase):
                                   """).strip(),
                          result.strip())
 
+    @unittest.skip("https://github.com/rnorth/mkdocs-codeinclude-plugin/issues/13")
     def test_simple_case_right_curly_inside_block(self):
         plugin = CodeIncludePlugin()
         result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_RIGHT_CURLY, PAGE_EXAMPLE, dict())

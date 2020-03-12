@@ -55,9 +55,10 @@ def select(
 
             delim_count -= line.count("}")
 
-            if delim_count > 0 and not first_line_of_block:
+            if not first_line_of_block:
                 delim_count += line.count("{")
-                selected_lines.append(i)
+                if delim_count > 0:
+                    selected_lines.append(i)
 
     if from_token and to_token:
         i = 0
