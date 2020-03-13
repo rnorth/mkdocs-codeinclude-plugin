@@ -43,22 +43,31 @@ def select(
             delim_count -= line.count("}")
 
     if inside_block:
-        i = 0
         delim_count = 0
-        for line in text.splitlines():
+        inside_matching = False
+        for line_number, line in enumerate(text.splitlines(), start=1):
             first_line_of_block = False
-            i = i + 1
+            # Detect the block beginning
             if inside_block in line and delim_count <= 0:
                 delim_count = 0
                 first_line_of_block = True
-                delim_count += line.count("{")
+                inside_matching = True
 
+            # Don't process lines that are outside the matching block
+            if not inside_matching:
+                continue
+
+            # Count the brackets in the line
+            delim_count += line.count("{")
             delim_count -= line.count("}")
 
-            if not first_line_of_block:
-                delim_count += line.count("{")
-                if delim_count > 0:
-                    selected_lines.append(i)
+            # If we closed the opening bracket (= dropped below 0), the matching block has ended
+            if delim_count <= 0:
+                inside_matching = False
+
+            # Append the lines inside the matching block, skipping the first matching
+            if inside_matching and not first_line_of_block:
+                selected_lines.append(line_number)
 
     if from_token and to_token:
         i = 0
