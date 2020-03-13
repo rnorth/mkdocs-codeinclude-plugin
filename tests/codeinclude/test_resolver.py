@@ -207,6 +207,7 @@ class ResolverTest(unittest.TestCase):
             inside_block="matching_block")
         self.maxDiff = None
         self.assertEquals(("  /* inside first */\n"
-                           "\n⋯\n\n"
+                           "\n"
+                           "  ⋯\n\n"
                            "  /* inside second */\n"),
                           result)

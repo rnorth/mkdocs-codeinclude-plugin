@@ -89,7 +89,11 @@ def select(
     last_selected = 0
     for i in sorted(selected_lines):
         if i > (last_selected + 1) and last_selected != 0:
-            result += "\n⋯\n\n"
+            # Add an ellipsis between non-adjacent lines
+            last_line = source_lines[last_selected - 1]
+            # Use the last line indent so that the result can be un-indented by the caller.
+            indent = leading_spaces(last_line)
+            result += f"\n{indent}⋯\n\n"
         result += source_lines[i - 1] + "\n"
         last_selected = i
 
@@ -97,3 +101,7 @@ def select(
         return text
 
     return result
+
+
+def leading_spaces(s: str) -> str:
+    return ' ' * (len(s) - len(s.lstrip()))
