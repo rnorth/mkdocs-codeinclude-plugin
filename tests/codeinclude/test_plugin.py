@@ -110,9 +110,10 @@ class PluginTextCase(unittest.TestCase):
                                   ```java tab=\"blocks\"
                                   public void blockA() {
                                       print("A")
-                                  ...
+                                  ⋯
                                       print("B")
                                   }
+
                                   ```
                                   
                                   and some text after

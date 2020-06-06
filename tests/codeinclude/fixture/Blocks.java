@@ -8,8 +8,8 @@ public class Blocks {
 
     
     public void blockB() {
-        // main {
+        // main {{
         print("B")
     }
-    // }}
+    // }
 }

@@ -1,5 +1,30 @@
 import re
+import sys
+from typing import List
 
+
+def removeIndentation(blocks: List[List[str]]) -> List[List[str]]:
+    min_difference = sys.maxsize
+    for block in blocks:
+        for line in block:
+            original_size = len(line)
+            stripped_size = len(line.lstrip())
+            difference = original_size - stripped_size
+            if (difference<min_difference):
+                min_difference = difference
+    for block in blocks:
+        for i in range(0, len(block)):
+            block[i] = block[i][min_difference:]
+    return blocks
+
+def joinBlocks(blocks: List[List[str]]) -> str:
+    result = ""
+    for block in blocks:
+        if result != "":
+            result += "⋯\n"
+        for line in block:
+            result += line
+    return result
 
 def select(
     text,
@@ -73,15 +98,20 @@ def select(
             if active and to_token in line:
                 active = False
 
-    result = ""
     source_lines = text.splitlines()
 
     last_selected = 0
+    blocks = []
+    current_block = []
     for i in sorted(selected_lines):
         if i > (last_selected + 1) and last_selected != 0:
-            result += "\n⋯\n\n"
-        result += source_lines[i - 1] + "\n"
+            blocks.append(current_block)
+            current_block = []
+        current_block.append(source_lines[i - 1]+"\n")
         last_selected = i
+    blocks.append(current_block)
+    blocks = removeIndentation(blocks)
+    result = joinBlocks(blocks)
 
     if result == "":
         return text
