@@ -23,7 +23,6 @@ setup(
     url='https://github.com/rnorth/mkdocs-codeinclude-plugin',
     author='Richard North',
     author_email='TODO',
-    license='Apache-2.0',
     python_requires='>=3.6',
     install_requires=[
         'mkdocs>=0.17',
