@@ -16,11 +16,11 @@ def read_file(fname):
 setup(
     name='mkdocs-codeinclude-plugin',
     version='0.0.1',
-    description="TODO",
+    description="A plugin for mkdocs that allows some advanced 'includes' functionality to be used for embedded code blocks.",
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
     keywords='mkdocs python markdown codeinclude',
-    url='TODO',
+    url='https://github.com/rnorth/mkdocs-codeinclude-plugin',
     author='Richard North',
     author_email='TODO',
     license='Apache-2.0',
