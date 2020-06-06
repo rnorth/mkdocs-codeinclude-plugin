@@ -31,6 +31,17 @@ and some text after
 
 """
 
+BLOCKS_MARKDOWN_EXAMPLE = """
+# hello world
+
+some text before
+<!--codeinclude--> 
+[blocks](Blocks.java) inside_block:main
+<!--/codeinclude-->
+and some text after
+
+"""
+
 c = Config(schema=DEFAULT_SCHEMA)
 c["site_url"] = "http://example.org/"
 
@@ -82,6 +93,28 @@ class PluginTextCase(unittest.TestCase):
                                   }
                                   ```
 
+                                  and some text after
+                                  """).strip(),
+                         result.strip())
+
+    def test_multi_blocks_case(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(BLOCKS_MARKDOWN_EXAMPLE, PAGE_EXAMPLE, dict())
+
+        print(result)
+        self.assertEqual(textwrap.dedent("""
+                                  # hello world
+                                  
+                                  some text before
+                                  
+                                  ```java tab=\"blocks\"
+                                  public void blockA() {
+                                      print("A")
+                                  ...
+                                      print("B")
+                                  }
+                                  ```
+                                  
                                   and some text after
                                   """).strip(),
                          result.strip())
