@@ -34,7 +34,7 @@ and some text after
 c = Config(schema=DEFAULT_SCHEMA)
 c["site_url"] = "http://example.org/"
 
-PAGE_EXAMPLE = Page("", File(os.path.abspath("./fixture/text.md"), "/src", "/dest", False), c)
+PAGE_EXAMPLE = Page("", File(os.path.abspath("./tests/codeinclude/fixture/text.md"), "/src", "/dest", False), c)
 
 
 class PluginTextCase(unittest.TestCase):
