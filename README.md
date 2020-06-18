@@ -109,10 +109,10 @@ Install the dependencies:
 
 ```shell
 pip install -r requirements.txt
-pip install nose # Optionally, install nose to run the tests
+pip install pytest # install pytest to run the tests
 ```
 
 Run the tests:
 ```shell
-nosetests
+pytest
 ```
