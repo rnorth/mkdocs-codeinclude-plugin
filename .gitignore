@@ -7,3 +7,4 @@ __pycache__/
 .eggs/
 .pytest_cache/
 .DS_Store
+.venv/
