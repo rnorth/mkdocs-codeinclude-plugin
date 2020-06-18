@@ -5,13 +5,11 @@ This is effectively an extended Markdown format, but is intended to degrade grac
 
 ## Installation
 
-1. Add dependency on the plugin:
+1. Install the plugin:
 
-```requirements.txt
--e git+https://github.com/rnorth/mkdocs-codeinclude-plugin#egg=mkdocs_codeinclude_plugin
 ```
-
-You have to use Git dependency specification until the plugin is published on PyPy.
+pip install mkdocs-codeinclude-plugin
+```
 
 2. Add `codeinclude` to the list of your MkDocs plugins (typically listed in `mkdocs.yml`):
 
