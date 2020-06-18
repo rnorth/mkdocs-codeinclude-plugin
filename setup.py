@@ -15,7 +15,7 @@ setup(
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
     keywords='mkdocs python markdown codeinclude',
-    url='TODO',
+    url='https://github.com/rnorth/mkdocs-codeinclude-plugin',
     author='Richard North',
     author_email='rich.north@gmail.com',
     license='MIT',
