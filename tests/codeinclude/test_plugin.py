@@ -80,6 +80,14 @@ MARKDOWN_EXAMPLE_RIGHT_CURLY = """
 <!--/codeinclude-->
 """
 
+MARKDOWN_EXAMPLE_MULTIMATCH = """
+# hello world
+
+<!--codeinclude-->
+[MultiMatch](MultiMatch.java) inside_block:some_token
+<!--/codeinclude-->
+"""
+
 c = Config(schema=DEFAULT_SCHEMA)
 c["site_url"] = "http://example.org/"
 
@@ -216,5 +224,27 @@ class PluginTextCase(unittest.TestCase):
                                   ```
 
                                   and some text after
+                                  """).strip(),
+                         result.strip())
+
+    def test_ellipsis_indent(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_MULTIMATCH, PAGE_EXAMPLE, dict())
+
+        print(result)
+        self.assertEqual(textwrap.dedent(r"""
+                                  # hello world
+
+
+                                  ```java tab="MultiMatch"
+                                  A
+                                  a
+
+                                  ⋯
+
+                                  C
+                                  c
+
+                                  ```
                                   """).strip(),
                          result.strip())
