@@ -7,16 +7,42 @@ This is effectively an extended Markdown format, but is intended to degrade grac
 
 1. Install the plugin:
 
-```
-pip install mkdocs-codeinclude-plugin
-```
+    ```
+    pip install mkdocs-codeinclude-plugin
+    ```
 
 2. Add `codeinclude` to the list of your MkDocs plugins (typically listed in `mkdocs.yml`):
 
-```yaml
-plugins:
-  - codeinclude
-```
+    ```yaml
+    plugins:
+      - codeinclude
+    ```
+
+3. The plugin should be configured use an appropriate form of tabbed fences, depending on the version of 
+[`pymdown-extensions`](https://github.com/facelessuser/pymdown-extensions) that is installed.
+Tabbed fences provide a 'title' for code blocks, and adjacent code blocks will appear as a multi-tabbed code block.
+
+    a. For version 8.x of `pymdown-extensions`, use the following or leave blank (default):
+        
+    ```yaml
+    plugins:
+      - codeinclude:
+          title_mode: pymdownx.tabbed 
+    ```
+   
+   b. For version 7.x or lower of `pymdown-extensions`, use the following:
+   ```yaml
+   plugins:
+     - codeinclude:
+         title_mode: legacy_pymdownx.superfences
+   ```
+   
+   c. If no tabbed fences should be used at all:
+   ```yaml
+   plugins:
+     - codeinclude:
+         title_mode: none
+   ```
 
 ## Usage
 
