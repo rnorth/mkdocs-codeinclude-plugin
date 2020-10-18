@@ -88,6 +88,17 @@ MARKDOWN_EXAMPLE_MULTIMATCH = """
 <!--/codeinclude-->
 """
 
+MARKDOWN_EXAMPLE_OTHER_LANGUAGE = """
+# hello world
+
+some text before
+<!--codeinclude-->
+[other_lang](other_lang.js)
+<!--/codeinclude-->
+and some text after
+
+"""
+
 c = Config(schema=DEFAULT_SCHEMA)
 c["site_url"] = "http://example.org/"
 
@@ -292,6 +303,31 @@ class PluginTextCase(unittest.TestCase):
                                   c
 
                                   ```
+                                  """
+            ).strip(),
+            result.strip(),
+        )
+
+    def test_other_language(self):
+        plugin = CodeIncludePlugin()
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_OTHER_LANGUAGE, PAGE_EXAMPLE, dict()
+        )
+
+        print(result)
+        self.assertEqual(
+            textwrap.dedent(
+                """
+                                  # hello world
+
+                                  some text before
+
+                                  ```js tab="other_lang"
+                                  // script in a custom language
+
+                                  ```
+
+                                  and some text after
                                   """
             ).strip(),
             result.strip(),
