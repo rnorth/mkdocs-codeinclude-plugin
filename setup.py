@@ -1,11 +1,6 @@
-import io
-import re
-from glob import glob
-from os.path import basename
 from os.path import dirname
 from os.path import join
-from os.path import splitext
-from setuptools import setup, find_packages
+from setuptools import setup
 
 
 def read_file(fname):
@@ -16,21 +11,20 @@ def read_file(fname):
 setup(
     name='mkdocs-codeinclude-plugin',
     version='0.0.1',
-    description="TODO",
+    description="A plugin to include code snippets into mkdocs pages",
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
     keywords='mkdocs python markdown codeinclude',
-    url='TODO',
+    url='https://github.com/rnorth/mkdocs-codeinclude-plugin',
     author='Richard North',
-    author_email='TODO',
-    license='Apache-2.0',
+    author_email='rich.north@gmail.com',
+    license='MIT',
     python_requires='>=3.6',
     install_requires=[
         'mkdocs>=0.17',
         'pygments'
     ],
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'License :: OSI Approved :: MIT License',
@@ -39,13 +33,10 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     packages=['codeinclude'],
-    py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     include_package_data=True,
     entry_points={
         'mkdocs.plugins': [
             'codeinclude = codeinclude.plugin:CodeIncludePlugin'
         ]
-    },
-    test_suite="nose.collector",
-    tests_require=["nose"]
+    }
 )

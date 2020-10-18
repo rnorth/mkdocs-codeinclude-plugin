@@ -53,8 +53,8 @@ MULTI_TAB_MARKDOWN_EXAMPLE = """
 # hello world
 
 some text before
-<!--codeinclude--> 
-[foo](Foo.java) 
+<!--codeinclude-->
+[foo](Foo.java)
 [bar](Bar.java)
 <!--/codeinclude-->
 and some text after
@@ -102,15 +102,15 @@ class PluginTextCase(unittest.TestCase):
         print(result)
         self.assertEqual(textwrap.dedent("""
                                   # hello world
-                                  
+
                                   some text before
-                                  
+
                                   ```java tab=\"foo\"
                                   public class Foo {
-                                  
+
                                   }
                                   ```
-                                  
+
                                   and some text after
                                   """).strip(),
                          result.strip())
@@ -129,7 +129,7 @@ class PluginTextCase(unittest.TestCase):
                                   public class Curly {
                                     public static String RIGHT_CURLY_REGEX = "\\}";
                                   }
-                                  
+
                                   ```
                                   """).strip(),
                          result.strip())
@@ -146,7 +146,7 @@ class PluginTextCase(unittest.TestCase):
 
                                   ```java tab=\"foo\"
                                   public class Foo {
-                                  
+
                                   ```
 
                                   and some text after
@@ -165,7 +165,7 @@ class PluginTextCase(unittest.TestCase):
 
                                   ```java tab=\"foo\"
                                   public class Foo {
-                                  
+
                                   ```
 
                                   and some text after
