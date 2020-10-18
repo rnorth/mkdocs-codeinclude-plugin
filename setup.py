@@ -10,7 +10,7 @@ def read_file(fname):
 
 setup(
     name='mkdocs-codeinclude-plugin',
-    version='0.0.1',
+    version='0.1.0',
     description="A plugin to include code snippets into mkdocs pages",
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
