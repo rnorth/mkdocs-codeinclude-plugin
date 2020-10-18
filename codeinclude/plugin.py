@@ -59,14 +59,18 @@ def find_code_include_blocks(markdown: str) -> List[CodeIncludeBlock]:
     for index, line in enumerate(lines):
         if re.match(RE_START, lines[index]):
             if in_block:
-                raise ValueError(f"Found two consecutive code-include starts: at lines {first} and {index}")
+                raise ValueError(
+                    f"Found two consecutive code-include starts: at lines {first} and {index}"
+                )
             first = index
             in_block = True
         elif re.match(RE_END, lines[index]):
             if not in_block:
-                raise ValueError(f"Found code-include end without preceding start at line {index}")
+                raise ValueError(
+                    f"Found code-include end without preceding start at line {index}"
+                )
             last = index
-            content = '\n'.join(lines[first:last + 1])
+            content = "\n".join(lines[first : last + 1])
             ci_blocks.append(CodeIncludeBlock(first, last, content))
             in_block = False
     return ci_blocks
@@ -106,7 +110,11 @@ def get_substitutes(blocks: List[CodeIncludeBlock], page) -> List[Replacement]:
             code_block = re.sub("^", indent, code_block, flags=re.MULTILINE)
 
             replacement_content += code_block
-        replacements.append(Replacement(ci_block.first_line_index, ci_block.last_line_index, replacement_content))
+        replacements.append(
+            Replacement(
+                ci_block.first_line_index, ci_block.last_line_index, replacement_content
+            )
+        )
     return replacements
 
 
@@ -122,7 +130,7 @@ def get_substitute(page, title, filename, lines, block, inside_block):
     page_parent_dir = os.path.dirname(page.file.abs_src_path)
     import_path = os.path.join(page_parent_dir, filename)
     # Always use UTF-8, as it is the recommended default for source file encodings.
-    with open(import_path, encoding='UTF-8') as f:
+    with open(import_path, encoding="UTF-8") as f:
         content = f.read()
 
     selected_content = select(
@@ -131,12 +139,12 @@ def get_substitute(page, title, filename, lines, block, inside_block):
 
     dedented = textwrap.dedent(selected_content)
 
-    return f'''
+    return f"""
 ```{header}
 {dedented}
 ```
 
-'''
+"""
 
 
 def substitute(markdown: str, substitutes: List[Replacement]) -> str:

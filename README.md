@@ -110,7 +110,16 @@ pip install -r requirements.txt
 pip install pytest # install pytest to run the tests
 ```
 
-Run the tests:
+### Running tests
+
+To run the tests:
 ```shell
 pytest
+```
+
+### Formatting code
+
+Code is formatted with Black. To apply formatting:
+```shell
+black codeinclude tests
 ```

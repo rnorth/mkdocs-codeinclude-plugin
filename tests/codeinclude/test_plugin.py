@@ -91,24 +91,34 @@ MARKDOWN_EXAMPLE_MULTIMATCH = """
 c = Config(schema=DEFAULT_SCHEMA)
 c["site_url"] = "http://example.org/"
 
-PAGE_EXAMPLE = Page("", File(os.path.abspath("./tests/codeinclude/fixture/text.md"), "/src", "/dest", False), c)
+PAGE_EXAMPLE = Page(
+    "",
+    File(
+        os.path.abspath("./tests/codeinclude/fixture/text.md"), "/src", "/dest", False
+    ),
+    c,
+)
 
 
 class PluginTextCase(unittest.TestCase):
-
     def test_no_includes(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_NO_INCLUDES, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_NO_INCLUDES, PAGE_EXAMPLE, dict()
+        )
 
-        self.assertEqual(MARKDOWN_EXAMPLE_NO_INCLUDES.strip(),
-                         result.strip())
+        self.assertEqual(MARKDOWN_EXAMPLE_NO_INCLUDES.strip(), result.strip())
 
     def test_simple_case_no_selector(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_NO_SELECTOR, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_NO_SELECTOR, PAGE_EXAMPLE, dict()
+        )
 
         print(result)
-        self.assertEqual(textwrap.dedent("""
+        self.assertEqual(
+            textwrap.dedent(
+                """
                                   # hello world
 
                                   some text before
@@ -120,16 +130,22 @@ class PluginTextCase(unittest.TestCase):
                                   ```
 
                                   and some text after
-                                  """).strip(),
-                         result.strip())
+                                  """
+            ).strip(),
+            result.strip(),
+        )
 
     @unittest.skip("https://github.com/rnorth/mkdocs-codeinclude-plugin/issues/13")
     def test_simple_case_right_curly_inside_block(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_RIGHT_CURLY, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_RIGHT_CURLY, PAGE_EXAMPLE, dict()
+        )
 
         print(result)
-        self.assertEqual(textwrap.dedent(r"""
+        self.assertEqual(
+            textwrap.dedent(
+                r"""
                                   # hello world
 
 
@@ -139,15 +155,21 @@ class PluginTextCase(unittest.TestCase):
                                   }
 
                                   ```
-                                  """).strip(),
-                         result.strip())
+                                  """
+            ).strip(),
+            result.strip(),
+        )
 
     def test_simple_case_selector_on_same_line(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_SELECTOR_ON_SAME_LINE, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_SELECTOR_ON_SAME_LINE, PAGE_EXAMPLE, dict()
+        )
 
         print(result)
-        self.assertEqual(textwrap.dedent("""
+        self.assertEqual(
+            textwrap.dedent(
+                """
                                   # hello world
 
                                   some text before
@@ -158,15 +180,21 @@ class PluginTextCase(unittest.TestCase):
                                   ```
 
                                   and some text after
-                                  """).strip(),
-                         result.strip())
+                                  """
+            ).strip(),
+            result.strip(),
+        )
 
     def test_simple_case_selector_on_next_line(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_SELECTOR_ON_NEXT_LINE, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_SELECTOR_ON_NEXT_LINE, PAGE_EXAMPLE, dict()
+        )
 
         print(result)
-        self.assertEqual(textwrap.dedent("""
+        self.assertEqual(
+            textwrap.dedent(
+                """
                                   # hello world
 
                                   some text before
@@ -177,15 +205,21 @@ class PluginTextCase(unittest.TestCase):
                                   ```
 
                                   and some text after
-                                  """).strip(),
-                         result.strip())
+                                  """
+            ).strip(),
+            result.strip(),
+        )
 
     def test_multi_tab_case(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MULTI_TAB_MARKDOWN_EXAMPLE, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            MULTI_TAB_MARKDOWN_EXAMPLE, PAGE_EXAMPLE, dict()
+        )
 
         print(result)
-        self.assertEqual(textwrap.dedent("""
+        self.assertEqual(
+            textwrap.dedent(
+                """
                                   # hello world
 
                                   some text before
@@ -204,15 +238,21 @@ class PluginTextCase(unittest.TestCase):
                                   ```
 
                                   and some text after
-                                  """).strip(),
-                         result.strip())
+                                  """
+            ).strip(),
+            result.strip(),
+        )
 
     def test_empty_title_case(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(EMPTY_TITLE_MARKDOWN_EXAMPLE, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            EMPTY_TITLE_MARKDOWN_EXAMPLE, PAGE_EXAMPLE, dict()
+        )
 
         print(result)
-        self.assertEqual(textwrap.dedent("""
+        self.assertEqual(
+            textwrap.dedent(
+                """
                                   # hello world
 
                                   some text before
@@ -224,15 +264,21 @@ class PluginTextCase(unittest.TestCase):
                                   ```
 
                                   and some text after
-                                  """).strip(),
-                         result.strip())
+                                  """
+            ).strip(),
+            result.strip(),
+        )
 
     def test_ellipsis_indent(self):
         plugin = CodeIncludePlugin()
-        result = plugin.on_page_markdown(MARKDOWN_EXAMPLE_MULTIMATCH, PAGE_EXAMPLE, dict())
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_MULTIMATCH, PAGE_EXAMPLE, dict()
+        )
 
         print(result)
-        self.assertEqual(textwrap.dedent(r"""
+        self.assertEqual(
+            textwrap.dedent(
+                r"""
                                   # hello world
 
 
@@ -246,5 +292,7 @@ class PluginTextCase(unittest.TestCase):
                                   c
 
                                   ```
-                                  """).strip(),
-                         result.strip())
+                                  """
+            ).strip(),
+            result.strip(),
+        )

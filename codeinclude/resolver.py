@@ -104,4 +104,4 @@ def select(
 
 
 def leading_spaces(s: str) -> str:
-    return ' ' * (len(s) - len(s.lstrip()))
+    return " " * (len(s) - len(s.lstrip()))
