@@ -19,9 +19,10 @@ setup(
     author='Richard North',
     author_email='rich.north@gmail.com',
     license='MIT',
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=[
         'mkdocs>=0.17',
+        'pygments'
     ],
     classifiers=[
         'Intended Audience :: Developers',

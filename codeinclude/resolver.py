@@ -43,21 +43,31 @@ def select(
             delim_count -= line.count("}")
 
     if inside_block:
-        i = 0
         delim_count = 0
-        for line in text.splitlines():
+        inside_matching = False
+        for line_number, line in enumerate(text.splitlines(), start=1):
             first_line_of_block = False
-            i = i + 1
+            # Detect the block beginning
             if inside_block in line and delim_count <= 0:
                 delim_count = 0
                 first_line_of_block = True
-                delim_count += line.count("{")
+                inside_matching = True
 
+            # Don't process lines that are outside the matching block
+            if not inside_matching:
+                continue
+
+            # Count the brackets in the line
+            delim_count += line.count("{")
             delim_count -= line.count("}")
 
-            if delim_count > 0 and not first_line_of_block:
-                delim_count += line.count("{")
-                selected_lines.append(i)
+            # If we closed the opening bracket (= dropped below 0), the matching block has ended
+            if delim_count <= 0:
+                inside_matching = False
+
+            # Append the lines inside the matching block, skipping the first matching
+            if inside_matching and not first_line_of_block:
+                selected_lines.append(line_number)
 
     if from_token and to_token:
         i = 0
@@ -79,7 +89,11 @@ def select(
     last_selected = 0
     for i in sorted(selected_lines):
         if i > (last_selected + 1) and last_selected != 0:
-            result += "\n⋯\n\n"
+            # Add an ellipsis between non-adjacent lines
+            last_line = source_lines[last_selected - 1]
+            # Use the last line indent so that the result can be un-indented by the caller.
+            indent = leading_spaces(last_line)
+            result += f"\n{indent}⋯\n\n"
         result += source_lines[i - 1] + "\n"
         last_selected = i
 
@@ -87,3 +101,7 @@ def select(
         return text
 
     return result
+
+
+def leading_spaces(s: str) -> str:
+    return ' ' * (len(s) - len(s.lstrip()))
