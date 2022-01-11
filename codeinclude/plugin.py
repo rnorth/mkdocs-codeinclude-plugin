@@ -155,9 +155,9 @@ class CodeIncludePlugin(BasePlugin):
         if self.config.get("title_mode") == "pymdownx.tabbed" and len(title) > 0:
             return f"""
 === "{title}"
-```{header}
-{dedented}
-```
+    ```{header}
+    {dedented}
+    ```
 
 """
         elif (
