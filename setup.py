@@ -24,8 +24,8 @@ setup(
     license='MIT',
     python_requires='>=3.7',
     install_requires=[
-        'mkdocs>=0.17',
-        'pygments'
+        'mkdocs>=1.2',
+        'pygments>=2.9.0'
     ],
     setup_requires=['better-setuptools-git-version'],
     classifiers=[
