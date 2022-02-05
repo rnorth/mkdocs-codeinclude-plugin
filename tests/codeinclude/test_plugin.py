@@ -2,7 +2,8 @@ import os
 import textwrap
 import unittest
 
-from mkdocs.config import Config, DEFAULT_SCHEMA
+import mkdocs.config
+import mkdocs.config.defaults
 from mkdocs.structure.files import File
 from mkdocs.structure.pages import Page
 
@@ -99,7 +100,7 @@ and some text after
 
 """
 
-c = Config(schema=DEFAULT_SCHEMA)
+c = mkdocs.config.Config(schema=mkdocs.config.defaults.get_schema())
 c["site_url"] = "http://example.org/"
 
 PAGE_EXAMPLE = Page(
@@ -367,7 +368,7 @@ class PluginTextCase(unittest.TestCase):
 
                                   some text before
 
-                                  ```js tab="other_lang"
+                                  ```javascript tab="other_lang"
                                   // script in a custom language
 
                                   ```
