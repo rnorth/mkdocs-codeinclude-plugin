@@ -45,7 +45,7 @@ def select(
             delim_count -= line.count("}")
 
         if not found_block:
-            raise ValueError("Block {block} not found to inject")
+            raise ValueError(f"Block {block} not found to inject")
 
     if inside_block:
         delim_count = 0
@@ -78,7 +78,7 @@ def select(
                 selected_lines.append(line_number)
         
         if not found_block:
-            raise ValueError("Block {block} not found to inject")
+            raise ValueError(f"Block {inside_block} not found to inject")
 
     if from_token and to_token:
         i = 0
