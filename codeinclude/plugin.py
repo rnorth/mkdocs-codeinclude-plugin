@@ -147,7 +147,7 @@ class CodeIncludePlugin(BasePlugin):
             content = f.read()
 
         selected_content = select(
-            content, lines=lines, block=block, inside_block=inside_block
+            content, filename, lines=lines, block=block, inside_block=inside_block
         )
 
         dedented = textwrap.dedent(selected_content)

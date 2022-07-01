@@ -3,6 +3,7 @@ import re
 
 def select(
     text,
+    filename,
     lines=None,
     from_token=None,
     to_token=None,
@@ -45,7 +46,7 @@ def select(
             delim_count -= line.count("}")
 
         if not found_block:
-            raise ValueError(f"Block {block} not found to inject")
+            raise ValueError(f"Block {block} not found to inject from {filename}")
 
     if inside_block:
         delim_count = 0
@@ -78,7 +79,7 @@ def select(
                 selected_lines.append(line_number)
         
         if not found_block:
-            raise ValueError(f"Block {inside_block} not found to inject")
+            raise ValueError(f"Block {inside_block} not found to inject from {filename}")
 
     if from_token and to_token:
         i = 0
