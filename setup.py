@@ -10,7 +10,10 @@ def read_file(fname):
 
 setup(
     name='mkdocs-codeinclude-plugin',
-    version="1.0",
+    version_config={
+        "version_format": "{tag}.dev{sha}",
+        "starting_version": "0.2.0"
+    },
     description="A plugin to include code snippets into mkdocs pages",
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
@@ -24,6 +27,7 @@ setup(
         'mkdocs>=1.2',
         'pygments>=2.9.0'
     ],
+    setup_requires=['better-setuptools-git-version'],
     classifiers=[
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
