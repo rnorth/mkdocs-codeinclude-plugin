@@ -28,6 +28,24 @@ class ResolverTest(unittest.TestCase):
         result = select(CODE_BLOCK_EXAMPLE, block="blockstarter")
         self.assertEquals(("blockstarter {\n" "    block content\n" "}\n"), result)
 
+    def test_block_throw(self):
+        # Test that entire file is returned for nonexistent block where `block_throw`=False
+        result = select(CODE_BLOCK_EXAMPLE, "test_file", block="nonexistent_block", block_throw=False)
+        self.assertEquals(CODE_BLOCK_EXAMPLE, result)
+
+        # ...as well as for inside_block
+        result = select(CODE_BLOCK_EXAMPLE, "test_file", inside_block="nonexistent_block", block_throw=False)
+        self.assertEquals(CODE_BLOCK_EXAMPLE, result)
+
+        # Test that throw occurs for nonexistent block
+        with self.assertRaises(ValueError):
+          result = select(CODE_BLOCK_EXAMPLE, "test_file", block="nonexistent_block", block_throw=True)
+
+        # ...as well as for inside_block
+        with self.assertRaises(ValueError):
+          result = select(CODE_BLOCK_EXAMPLE, "test_file", inside_block="nonexistent_block", block_throw=True)
+
+
     def test_block_curly_on_same_line(self):
         result = select(
             textwrap.dedent(
