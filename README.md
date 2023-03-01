@@ -100,6 +100,7 @@ Note that:
 * Every line in the source file will be searched for an instance of the token (e.g. `doFoo`). If more than one line
   includes that token, then potentially more than one block could be targeted for inclusion. It is advisable to use a
   specific, unique token to avoid unexpected behaviour.
+* If the specified block is not found, behavior depends on the `block_throw` config value (see [Configuration](#configuration))
   
 When we wish to include a section of code that does not naturally appear within braces, we can simply insert our token,
 with matching braces, in a comment. 
@@ -126,6 +127,16 @@ will be rendered as:
 ```java
 doTheThingThatWeActuallyWantToShow();
 ```
+
+## Configuration
+
+This plugin takes two config values, specified in `mkdocs.yml`.
+
+| Name          | Description                                                                                                         | Values                                                   | Default           |
+|---------------|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|-------------------|
+| `title_mode`  | Controls how titles are generated for included blocks                                                               | `none`, `legacy_pymdownx.superfences`, `pymdownx.tabbed` | `pymdownx.tabbed` |
+| `block_throw` | Controls whether to include entire file (`false`) or raise an error (`true`) if included block is not found in file | `true`, `false`                                          | `false`           |
+
 
 ## Building the Project
 

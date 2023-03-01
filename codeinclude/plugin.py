@@ -61,6 +61,10 @@ class CodeIncludePlugin(BasePlugin):
                 default="pymdownx.tabbed",
             ),
         ),
+        (
+            "block_throw",
+            mkdocs.config.config_options.Type(bool, default=False)
+        )
     )
 
     def on_page_markdown(self, markdown, page, config, site_navigation=None, **kwargs):
@@ -146,7 +150,7 @@ class CodeIncludePlugin(BasePlugin):
             content = f.read()
 
         selected_content = select(
-            content, lines=lines, block=block, inside_block=inside_block
+            content, filename=filename, lines=lines, block=block, inside_block=inside_block, block_throw=self.config["block_throw"]
         )
 
         dedented = textwrap.dedent(selected_content)
