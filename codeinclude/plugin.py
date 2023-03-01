@@ -1,4 +1,3 @@
-import enum
 import os
 import re
 import shlex
@@ -6,7 +5,7 @@ import textwrap
 from dataclasses import dataclass
 from typing import List
 
-import mkdocs
+import mkdocs.config.config_options
 from mkdocs.plugins import BasePlugin
 
 from codeinclude.languages import get_lang_class
@@ -153,11 +152,13 @@ class CodeIncludePlugin(BasePlugin):
         dedented = textwrap.dedent(selected_content)
 
         if self.config.get("title_mode") == "pymdownx.tabbed" and len(title) > 0:
+            # Newest version of pymdownx requires everything to be indented 4-spaces.
+            dedented = "".join([f'    {line}\n' for line in dedented.split('\n')])
             return f"""
 === "{title}"
-```{header}
+    ```{header}
 {dedented}
-```
+    ```
 
 """
         elif (
