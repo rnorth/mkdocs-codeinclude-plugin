@@ -57,7 +57,7 @@ class CodeIncludePlugin(BasePlugin):
         (
             "title_mode",
             mkdocs.config.config_options.Choice(
-                choices=["none", "legacy_pymdownx.superfences", "pymdownx.tabbed"],
+                choices=["none", "legacy_pymdownx.superfences", "pymdownx.tabbed", "mkdocs-material"],
                 default="pymdownx.tabbed",
             ),
         ),
@@ -171,6 +171,15 @@ class CodeIncludePlugin(BasePlugin):
 ```
 
 """
+        elif (
+            self.config.get("title_mode") == "mkdocs-material"
+        ):
+            return f"""
+```{header} title="{title}"
+{dedented}
+```
+
+"""     
         else:
             return f"""
 ```{header}

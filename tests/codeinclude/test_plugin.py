@@ -297,6 +297,33 @@ class PluginTextCase(unittest.TestCase):
             result.strip(),
         )
 
+    def test_mkdocs_material_no_selector(self):
+        plugin = CodeIncludePlugin()
+        plugin.load_config({"title_mode": "mkdocs-material"})
+        result = plugin.on_page_markdown(
+            MARKDOWN_EXAMPLE_NO_SELECTOR, PAGE_EXAMPLE, dict()
+        )
+
+        print(result)
+        self.assertEqual(
+            textwrap.dedent(
+                """
+                                  # hello world
+
+                                  some text before
+
+                                  ```java title=\"foo\"
+                                  public class Foo {
+
+                                  }
+                                  ```
+
+                                  and some text after
+                                  """
+            ).strip(),
+            result.strip(),
+        )
+
     def test_empty_title_case(self):
         plugin = CodeIncludePlugin()
         plugin.load_config({"title_mode": "legacy_pymdownx.superfences"})

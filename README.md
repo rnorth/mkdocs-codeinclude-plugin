@@ -31,13 +31,23 @@ Tabbed fences provide a 'title' for code blocks, and adjacent code blocks will a
     ```
    
    b. For version 7.x or lower of `pymdown-extensions`, use the following:
+   
    ```yaml
    plugins:
      - codeinclude:
          title_mode: legacy_pymdownx.superfences
    ```
    
-   c. If no tabbed fences should be used at all:
+   c. If you are using [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#adding-a-title), use the following:
+   
+   ```yaml
+    plugins:
+      - codeinclude:
+            title_mode: mkdocs-material
+   ```
+   
+   d. If no tabbed fences should be used at all:
+   
    ```yaml
    plugins:
      - codeinclude:
