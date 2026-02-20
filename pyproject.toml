@@ -28,10 +28,10 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/rnorth/mkdocs-codeinclude-plugin"
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "pytest",
-    "flake8",
+    "ruff",
 ]
 
 [project.entry-points."mkdocs.plugins"]

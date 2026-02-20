@@ -29,12 +29,10 @@ def select(
     if block:
         i = 0
         delim_count = 0
-        found_block = False
         for line in text.splitlines():
             first_line_of_block = False
             i = i + 1
             if block in line and delim_count <= 0:
-                found_block = True
                 delim_count = 0
                 first_line_of_block = True
                 delim_count += line.count("{")
@@ -52,13 +50,11 @@ def select(
     if inside_block:
         delim_count = 0
         inside_matching = False
-        found_block = False
         for line_number, line in enumerate(text.splitlines(), start=1):
             first_line_of_block = False
 
             # Detect the block beginning
             if inside_block in line and delim_count <= 0:
-                found_block = True
                 delim_count = 0
                 first_line_of_block = True
                 inside_matching = True
