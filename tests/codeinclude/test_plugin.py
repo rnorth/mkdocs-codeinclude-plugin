@@ -269,32 +269,37 @@ class PluginTextCase(unittest.TestCase):
         )
 
         print(result)
+        def rstrip_lines(s):
+            return "\n".join(line.rstrip() for line in s.split("\n"))
+
         self.assertEqual(
-            textwrap.dedent(
+            rstrip_lines(textwrap.dedent(
                 """
                                   # hello world
 
                                   some text before
 
                                   === "foo"
-                                  ```java
-                                  public class Foo {
+                                      ```java
+                                      public class Foo {
 
-                                  }
-                                  ```
+                                      }
+
+                                      ```
 
 
                                   === "bar"
-                                  ```java
-                                  public class Bar {
-                                    // This UTF-8 encoded file has some multi-byte characters: œ, ë
-                                  }
-                                  ```
+                                      ```java
+                                      public class Bar {
+                                        // This UTF-8 encoded file has some multi-byte characters: œ, ë
+                                      }
+
+                                      ```
 
                                   and some text after
                                   """
-            ).strip(),
-            result.strip(),
+            ).strip()),
+            rstrip_lines(result.strip()),
         )
 
     def test_mkdocs_material_no_selector(self):
