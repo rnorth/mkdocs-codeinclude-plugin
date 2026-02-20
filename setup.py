@@ -10,10 +10,7 @@ def read_file(fname):
 
 setup(
     name='mkdocs-codeinclude-plugin',
-    version_config={
-        "version_format": "{tag}.dev{sha}",
-        "starting_version": "0.2.0"
-    },
+    use_scm_version=True,
     description="A plugin to include code snippets into mkdocs pages",
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
@@ -22,19 +19,19 @@ setup(
     author='Richard North',
     author_email='rich.north@gmail.com',
     license='MIT',
-    python_requires='>=3.7',
+    python_requires='>=3.11',
     install_requires=[
         'mkdocs>=1.2',
         'pygments>=2.9.0'
     ],
-    setup_requires=['better-setuptools-git-version'],
+    setup_requires=['setuptools-scm'],
     classifiers=[
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.11',
     ],
     packages=['codeinclude'],
     include_package_data=True,
