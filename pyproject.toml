@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkdocs-codeinclude-plugin"
+dynamic = ["version"]
+description = "A plugin to include code snippets into mkdocs pages"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Richard North", email = "rich.north@gmail.com" }
+]
+keywords = ["mkdocs", "python", "markdown", "codeinclude"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "mkdocs>=1.2",
+    "pygments>=2.9.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/rnorth/mkdocs-codeinclude-plugin"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[project.entry-points."mkdocs.plugins"]
+codeinclude = "codeinclude.plugin:CodeIncludePlugin"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["codeinclude*"]
+
+[tool.setuptools_scm]

@@ -1,3 +1,4 @@
+.worktrees/
 *.egg-info/
 .vscode/
 .direnv/
@@ -10,3 +11,4 @@ __pycache__/
 .venv/
 build/
 dist/
+uv.lock
