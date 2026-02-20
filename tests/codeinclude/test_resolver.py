@@ -46,6 +46,28 @@ class ResolverTest(unittest.TestCase):
           result = select(CODE_BLOCK_EXAMPLE, "test_file", inside_block="nonexistent_block", block_throw=True)
 
 
+    def test_block_throw_when_token_matches_but_no_braces(self):
+        """block_throw should raise when a token appears on a line without braces,
+        rather than silently returning the whole file."""
+        text = textwrap.dedent("""
+            void call_foo();
+            int x = 1;
+        """)
+
+        with self.assertRaises(ValueError):
+            select(text, "test_file", block="foo", block_throw=True)
+
+    def test_inside_block_throw_when_token_matches_but_no_braces(self):
+        """inside_block with block_throw should raise when the token appears
+        on a line without braces, rather than silently returning the whole file."""
+        text = textwrap.dedent("""
+            void call_foo();
+            int x = 1;
+        """)
+
+        with self.assertRaises(ValueError):
+            select(text, "test_file", inside_block="foo", block_throw=True)
+
     def test_block_curly_on_same_line(self):
         result = select(
             textwrap.dedent(
